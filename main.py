@@ -33,8 +33,6 @@ def get_website():
 
     # process the soup contents
 
-
-    #print soup.prettify()
     attributes = {
             'soup': soup,
             'url': url,
