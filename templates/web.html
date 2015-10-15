@@ -1,0 +1,58 @@
+{% macro print_html(soup) -%}
+    {% if type(soup) == bs4.element.Tag %}
+        {% for s in soup.children %}
+            print_html(s) 
+        {% endfor %}
+    {% else %}
+        <span class="{{ type(soup) }}"> {{str(soup)}} </span>    
+    {% endif %}
+{%- endmacro %}
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/skeleton.css">
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <style>
+        #toggle {
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+        }
+        </style>
+        <script>
+            function highlightTag(e){
+                var tag = e.className;
+                var c_name = tag.substring(0, tag.length - 4);
+                
+                $(c_name).each(function(){
+                    this.toggle('highlight');
+                });
+            }
+        </script>
+    </head>
+    <title>Website Summary</title>
+
+
+    <h1> Website Summary </h1>
+    <form action='/api/website' method="POST">
+        Website:
+        <input name="website" type="text" /> 
+        <input type="submit" />
+    </form>
+    <div class="row">
+    
+        <div class="summary three columns">
+        {% for c in counter %}
+            <strong onClick="highlightTag(this)" class="{{c[0]}}_tag"> {{ c[0] }} </strong> : {{ c[1] }} <br>
+        {% endfor %}
+        </div>
+        <div class="source nine columns">
+            {% for l in source_split %}
+                <p>
+                    {{l}}
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+
+</html>
