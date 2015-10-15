@@ -2,3 +2,4 @@ Flask==0.10.1
 Jinja2==2.7.3
 gunicorn==19.3.0
 BeautifulSoup==3.2.1
+beautifulsoup4==4.4.1
